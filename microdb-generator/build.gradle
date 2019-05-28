@@ -4,7 +4,7 @@ apply plugin: 'com.bmuschko.nexus'
 apply from: file('gradle/idea.gradle')
 
 ext.versions = [
-        slf4j: "1.7.2",
+        slf4j: "1.7.7",
         logback: "1.0.9",
         junit: "4.12",
         antlr: '4.5.1'
