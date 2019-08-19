@@ -1,3 +1,4 @@
+enableFeaturePreview('STABLE_PUBLISHING')
 include ':microdb-runtime'
 include ':microdb-generator'
 include ':microdb-gradleplugin'

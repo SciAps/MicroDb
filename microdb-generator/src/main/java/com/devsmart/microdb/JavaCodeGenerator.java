@@ -60,6 +60,10 @@ public class JavaCodeGenerator {
             classBuilder.superclass(ClassName.get(MICRODB_PACKAGE, "DBObject"));
         }
 
+        if(mDBO.implement != null) {
+            classBuilder.addSuperinterface(ClassName.get(mFileCtx.packageName, mDBO.implement));
+        }
+
         classBuilder.addField(
                 FieldSpec.builder(UBString.class, "TYPE", Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                         .initializer("$T.createString($S)", UBValueFactory.class, mDBO.name)
