@@ -65,7 +65,7 @@ class DBOCompilerPlugin implements Plugin<Project> {
     }
 
     boolean hasAndroidLibraryPlugin(project) {
-        project.plugins.hasPlugin('com.android.library')
+        return project.plugins.hasPlugin('com.android.library')
     }
 
     def sourceSetName(variant) {
