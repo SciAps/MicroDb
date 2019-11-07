@@ -1,21 +1,23 @@
 buildscript {
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-  }
+    repositories {
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
 }
 
 allprojects {
 
-  group = 'com.dev-smart'
-  version = '0.4.3-SNAPSHOT'
-  description = 'A embedded NoSQL Database'
+    group = 'com.dev-smart'
+    version = '0.5.1'
+    description = 'A embedded NoSQL Database'
 
-  repositories {
-    mavenCentral()
-  }
+    repositories {
+        mavenCentral()
+        google()
+    }
 
 }
 

@@ -5,16 +5,19 @@ import com.devsmart.ubjson.UBObject;
 import com.devsmart.ubjson.UBValue;
 import com.devsmart.ubjson.UBValueFactory;
 import com.google.common.base.Charsets;
-import com.google.common.base.Throwables;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Queue;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MicroDB
 {
@@ -26,8 +29,8 @@ public class MicroDB
     private       DBCallback                             mCallback;
     private final HashMap<UUID, WeakReference<DBObject>> mLiveObjects     = new HashMap<UUID, WeakReference<DBObject>>();
     private final WriteQueue                             mWriteQueue      = new WriteQueue();
-    private       ArrayList<ChangeListener>              mChangeListeners = new ArrayList<ChangeListener>();
-    private       Map<String, Constructor>               mConstructorMap;
+    private ArrayList<ChangeListener> mChangeListeners = new ArrayList<ChangeListener>();
+    private Map<String, Constructor> mConstructorMap;
 
     @Override
     protected void finalize() throws Throwable
@@ -88,7 +91,7 @@ public class MicroDB
             }
             if (mException != null)
             {
-                Throwables.propagate(mException);
+                logger.error("", mException);
             }
         }
 
@@ -317,8 +320,6 @@ public class MicroDB
         };
     }
 
-    private AtomicBoolean mAutoSave = new AtomicBoolean(true);
-
     static final MapFunction<String> INDEX_OBJECT_TYPE = new MapFunction<String>()
     {
         @Override
@@ -491,7 +492,6 @@ public class MicroDB
         }
         catch (Exception e)
         {
-            Throwables.propagate(e);
             return null;
         }
     }
@@ -716,14 +716,11 @@ public class MicroDB
             @Override
             public Iterator<T> iterator()
             {
-                try
-                {
+                try {
                     final Cursor cursor = queryIndex("type", className, true, className, true);
                     return new RowIterator<T>(cursor, MicroDB.this, classType);
                 }
-                catch (IOException e)
-                {
-                    Throwables.propagate(e);
+                catch (IOException e) {
                     return null;
                 }
             }
@@ -767,7 +764,6 @@ public class MicroDB
             }
             catch (Exception e)
             {
-                Throwables.propagate(e);
                 return null;
             }
         }
@@ -778,25 +774,4 @@ public class MicroDB
             throw new UnsupportedOperationException("remove not implemented");
         }
     }
-
-    /*
-    public <T extends DBObject, K extends Comparable<K>> Iterable<T> queryIndex(String indexName, final Class<T> classType, K min, boolean minInclusive, K max, boolean maxInclusive) throws IOException {
-        final Cursor rowCursor = queryIndex(indexName, min, minInclusive, max, maxInclusive);
-        return Iterables.transform(rowCursor, new Function<Row, T>() {
-            @Override
-            public T apply(Row input) {
-                try {
-                    T shell = classType.newInstance();
-                    return get(input.getPrimaryKey(), shell);
-                } catch (Exception e) {
-                    Throwables.propagate(e);
-                    return null;
-                }
-            }
-        });
-    }
-
-
-    */
-
 }

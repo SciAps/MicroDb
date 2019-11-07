@@ -33,8 +33,9 @@ public class SemPass1 extends MicroDBBaseVisitor<Nodes.Node> {
     public Nodes.Node visitDbo(MicroDBParser.DboContext ctx) {
         String name = ctx.name.getText();
         String extend = ctx.extend != null ? ctx.extend.getText() : null;
+        String implement = ctx.implement != null ? ctx.implement.getText() : null;
 
-        mCurrentDBO = new Nodes.DBONode(name, extend);
+        mCurrentDBO = new Nodes.DBONode(name, extend, implement);
         visit(ctx.exprlist());
         mContext.allDBO.add(mCurrentDBO);
         return putMap(ctx, mCurrentDBO);
