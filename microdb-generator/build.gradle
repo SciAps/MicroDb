@@ -76,6 +76,13 @@ compileJava {
     sourceCompatibility = 1.6
 }
 
+task version {
+    doLast {
+        println "Gradle version: " + project.getGradle().getGradleVersion()
+        println "Groovy version: " + GroovySystem.getVersion()
+    }
+}
+
 modifyPom {
     project {
         name 'microdb-generator'
