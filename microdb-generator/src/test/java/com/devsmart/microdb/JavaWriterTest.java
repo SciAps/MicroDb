@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
-import static org.truth0.Truth.ASSERT;
+import static com.google.common.truth.Truth.assertAbout;
 
 public class JavaWriterTest {
 
@@ -49,14 +49,14 @@ public class JavaWriterTest {
 
     @Test
     public void expectedMyDBOBJSourceCompiles() {
-        ASSERT.about(javaSource())
+        assertAbout(javaSource())
                 .that(myDBObjJavaSource)
                 .compilesWithoutError();
     }
 
     @Test
     public void expectedExtendObJSourceCompiles() {
-        ASSERT.about(javaSource())
+        assertAbout(javaSource())
                 .that(myExtendObjJavaSource)
                 .compilesWithoutError();
     }
@@ -70,7 +70,7 @@ public class JavaWriterTest {
 
         JavaFileObject generatedSource = JavaFileObjects.forSourceString("org/example/MyDBObj.java", javaSource);
 
-        ASSERT.about(javaSource())
+        assertAbout(javaSource())
                 .that(generatedSource)
                 .parsesAs(myDBObjJavaSource);
     }
@@ -83,7 +83,7 @@ public class JavaWriterTest {
 
         JavaFileObject generatedSource = JavaFileObjects.forSourceString("org/example/ExtendDBObj.java", javaSource);
 
-        ASSERT.about(javaSource())
+        assertAbout(javaSource())
                 .that(generatedSource)
                 .parsesAs(myExtendObjJavaSource);
     }
