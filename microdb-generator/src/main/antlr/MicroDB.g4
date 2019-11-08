@@ -17,6 +17,8 @@ packageName
 
 dbo : DBO name=ID LPAREN exprlist RPAREN
     | DBO name=ID 'extends' extend=ID LPAREN exprlist RPAREN
+    | DBO name=ID 'implements' implement=ID LPAREN exprlist RPAREN
+    | DBO name=ID 'extends' extend=ID 'implements' implement=ID LPAREN exprlist RPAREN
     ;
 
 exprlist
