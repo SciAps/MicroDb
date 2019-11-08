@@ -3,10 +3,12 @@ apply plugin: 'groovy'
 apply plugin: 'com.bmuschko.nexus'
 
 dependencies {
-    compile gradleApi()
-    compile localGroovy()
-    compile project (':microdb-generator')
-    testCompile 'junit:junit:4.12'
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation project (':microdb-generator')
+    testImplementation 'junit:junit:4.12'
+    implementation 'commons-cli:commons-cli:1.3.1'
+    implementation 'org.antlr:antlr4-runtime:4.5.3'
 }
 
 compileJava {
