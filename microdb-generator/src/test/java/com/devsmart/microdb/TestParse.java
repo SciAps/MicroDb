@@ -19,7 +19,8 @@ public class TestParse {
                 break;
             }
 
-            System.out.println(String.format("token %s %s", lexer.getTokenNames()[token.getType()], token.getText()));
+            System.out.println(String.format("token %s %s",
+                    lexer.getVocabulary().getDisplayName(token.getType()), token.getText()));
 
         }
 
