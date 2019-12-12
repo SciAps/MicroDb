@@ -380,13 +380,6 @@ public class MicroDB
         {
             upgrade();
         } 
-        else 
-        {
-            mDriver.beginTransaction();            
-            metaObj.put(METAKEY_DBVERSION, UBValueFactory.createInt(mSchemaVersion));
-            mDriver.saveMeta(metaObj);
-            mDriver.commitTransaction();
-        }
     }
 
     public void upgrade() throws IOException
