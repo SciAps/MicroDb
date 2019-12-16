@@ -357,27 +357,24 @@ public class MicroDB
     private static final String METAKEY_DBVERSION = "schema_version";
     private static final String METAKEY_INSTANCE  = "instance";
 
-    private void init() throws IOException
-    {
+    private void init() throws IOException {
         mDriver.addIndex("type", INDEX_OBJECT_TYPE);
 
         int currentVersion = -1;
         UBObject metaObj = mDriver.getMeta();
-        if (!metaObj.containsKey(METAKEY_INSTANCE))
-        {
+        if (!metaObj.containsKey(METAKEY_INSTANCE)) {
             mDriver.beginTransaction();
             metaObj.put(METAKEY_INSTANCE, UBValueFactory.createString(UUID.randomUUID().toString()));
 
             mDriver.saveMeta(metaObj);
             mDriver.commitTransaction();
-        }
-        else
-        {
-            currentVersion = metaObj.get(METAKEY_DBVERSION).asInt();
+        } else {
+            if (metaObj.containsKey(METAKEY_DBVERSION)) {
+                currentVersion = metaObj.get(METAKEY_DBVERSION).asInt();
+            }
         }
 
-        if (currentVersion < mSchemaVersion && mCallback.onNeedsUpgrade(this, currentVersion, mSchemaVersion))
-        {
+        if (currentVersion < mSchemaVersion && mCallback.onNeedsUpgrade(this, currentVersion, mSchemaVersion)) {
             upgrade();
         } 
     }
